@@ -1,6 +1,7 @@
 package com.javaex.contoller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -26,17 +27,17 @@ public class PhoneController_class extends HttpServlet {
 
 		// 파라미터 action 값을 읽어온다
 		String action = request.getParameter("action");
-//		System.out.println(action);
+		System.out.println(action);
 
 		if ("list".equals(action)) {
 			// 리스트업무
-//			System.out.println("[리스트]");
+			System.out.println("[리스트]");
 
 			// 리스트
-//			List<PhoneVo> pList = pDao.getList();
+			List<PhoneVo> pList = pDao.getList();
 
-//			System.out.println("======= controller =======");
-//			System.out.println(pDao.getList());
+			System.out.println("======= controller =======");
+			System.out.println(pDao.getList());
 
 			// 데이터 넣기 --> request.어트리뷰트에 담는다
 			request.setAttribute("pList", pDao.getList());
@@ -49,14 +50,14 @@ public class PhoneController_class extends HttpServlet {
 			rd.forward(request, response);
 
 		} else if ("wForm".equals(action)) {
-//			System.out.println("[글쓰기폼]");
+			System.out.println("[글쓰기폼]");
 
 			// forward
 			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/writeForm.jsp");
 			rd.forward(request, response);
 
 		} else if ("insert".equals(action)) {
-//			System.out.println("[저장]");
+			System.out.println("[저장]");
 
 			String name = request.getParameter("name");
 			String hp = request.getParameter("hp");
@@ -66,33 +67,6 @@ public class PhoneController_class extends HttpServlet {
 
 			response.sendRedirect("/phonebook2/pbc?action=list");
 
-		} else if ("uForm".equals(action)) {
-//			System.out.println("[수정폼]");
-
-			// forward
-			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/updateForm.jsp");
-			rd.forward(request, response);
-
-		} else if ("update".equals(action)) {
-//			System.out.println("[수정]");
-
-			String name = request.getParameter("name");
-			String hp = request.getParameter("hp");
-			String cp = request.getParameter("cp");
-			int id = Integer.parseInt(request.getParameter("id"));
-
-			pDao.update(new PhoneVo(id, name, hp, cp));
-
-			response.sendRedirect("/phonebook2/pbc?action=list");
-
-		} else if ("delete".equals(action)) {
-//			System.out.println("[수정]");
-
-			int id = Integer.parseInt(request.getParameter("id"));
-
-			pDao.delete(new PhoneVo(id));
-
-			response.sendRedirect("/phonebook2/pbc?action=list");
 		}
 
 	}
