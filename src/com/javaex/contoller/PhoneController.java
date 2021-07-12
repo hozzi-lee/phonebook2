@@ -48,6 +48,11 @@ public class PhoneController extends HttpServlet {
 			response.sendRedirect("/phonebook2/pbc?action=list");
 
 		} else if ("uForm".equals(action)) {
+			int id = Integer.parseInt(request.getParameter("id"));
+			
+			PhoneVo pID = pDao.getPerson(id);
+			
+			request.setAttribute("pID", pID);
 			// forward
 			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/updateForm.jsp");
 			rd.forward(request, response);

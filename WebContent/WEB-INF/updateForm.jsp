@@ -3,14 +3,11 @@
 
 <%@ page import="com.javaex.vo.PhoneVo" %>
 <%@ page import="com.javaex.dao.PhoneDao" %>
+<%@ page import="java.util.List"%>
 
 <%
 
-PhoneDao pDao = new PhoneDao();
-
-int id = Integer.parseInt(request.getParameter("id"));
-
-PhoneVo pVid = pDao.getPerson(id);
+PhoneVo pID = (PhoneVo)request.getAttribute("pID");
 
 %>
 
@@ -28,10 +25,10 @@ PhoneVo pVid = pDao.getPerson(id);
 	<form action="/phonebook2/pbc" method="post">
 
 		<input type="hidden" name="action" value="update"><br>
-		이름: <input type="text" name="name" value="<%=pVid.getName() %>"> <br>
-		핸드폰: <input type="text" name="hp" value="<%=pVid.getHp() %>"> <br>
-		회사: <input type="text" name="cp" value="<%=pVid.getCompany() %>"> <br>
-		<input type="hidden" name="id" value="<%=pVid.getPersonID() %>"> <br>
+		이름: <input type="text" name="name" value="<%=pID.getName() %>"> <br>
+		핸드폰: <input type="text" name="hp" value="<%=pID.getHp() %>"> <br>
+		회사: <input type="text" name="cp" value="<%=pID.getCompany() %>"> <br>
+		<input type="hidden" name="id" value="<%=pID.getPersonID() %>"> <br>
 
 		<button type="submit">수정</button>
 
