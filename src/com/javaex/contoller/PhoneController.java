@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javaex.dao.PhoneDao;
+import com.javaex.util.WebUtil;
 import com.javaex.vo.PhoneVo;
 
 @WebServlet("/pbc")
@@ -30,13 +31,20 @@ public class PhoneController extends HttpServlet {
 			request.setAttribute("pList", pDao.getList());
 
 			// html --> .jsp == forward
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/list.jsp");
-			rd.forward(request, response);
+			/*
+			 * RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/list.jsp");
+			 * rd.forward(request, response);
+			 */
+			WebUtil.forward(request, response, "/WEB-INF/list.jsp");
 
 		} else if ("wForm".equals(action)) {
 			// forward
-			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/writeForm.jsp");
-			rd.forward(request, response);
+			/*
+			 * RequestDispatcher rd =
+			 * request.getRequestDispatcher("/WEB-INF/writeForm.jsp"); rd.forward(request,
+			 * response);
+			 */
+			WebUtil.forward(request, response, "/WEB-INF/writeForm.jsp");
 
 		} else if ("insert".equals(action)) {
 			String name = request.getParameter("name");
@@ -45,17 +53,22 @@ public class PhoneController extends HttpServlet {
 
 			pDao.insert(new PhoneVo(name, hp, cp));
 
-			response.sendRedirect("/phonebook2/pbc?action=list");
+//			response.sendRedirect("/phonebook2/pbc?action=list");
+			WebUtil.sendRedirect(request, response, "/phonebook2/pbc?action=list");
 
 		} else if ("uForm".equals(action)) {
 			int id = Integer.parseInt(request.getParameter("id"));
-			
+
 			PhoneVo pID = pDao.getPerson(id);
-			
+
 			request.setAttribute("pID", pID);
 			// forward
-			RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/updateForm.jsp");
-			rd.forward(request, response);
+			/*
+			 * RequestDispatcher rd =
+			 * request.getRequestDispatcher("/WEB-INF/updateForm.jsp"); rd.forward(request,
+			 * response);
+			 */
+			WebUtil.forward(request, response, "/WEB-INF/updateForm.jsp");
 
 		} else if ("update".equals(action)) {
 			String name = request.getParameter("name");
@@ -65,14 +78,16 @@ public class PhoneController extends HttpServlet {
 
 			pDao.update(new PhoneVo(id, name, hp, cp));
 
-			response.sendRedirect("/phonebook2/pbc?action=list");
+//			response.sendRedirect("/phonebook2/pbc?action=list");
+			WebUtil.sendRedirect(request, response, "/phonebook2/pbc?action=list");
 
 		} else if ("delete".equals(action)) {
 			int id = Integer.parseInt(request.getParameter("id"));
 
 			pDao.delete(new PhoneVo(id));
 
-			response.sendRedirect("/phonebook2/pbc?action=list");
+//			response.sendRedirect("/phonebook2/pbc?action=list");
+			WebUtil.sendRedirect(request, response, "/phonebook2/pbc?action=list");
 		}
 
 	}
